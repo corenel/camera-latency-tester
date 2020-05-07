@@ -9,11 +9,15 @@ LatencyTester::~LatencyTester() { cv::destroyAllWindows(); };
 void LatencyTester::feed(const cv::Mat& frame) {
   cv::Mat img;
   cv::cvtColor(frame, img, cv::COLOR_BGR2GRAY);
+
+  frame_number_++;
   bool is_now_dark = cv::mean(img)[0] < threshold_;
+  std::cout << cv::mean(img)[0] << " " << is_dark_ << " " << is_now_dark
+            << std::endl;
   if (is_dark_ != is_now_dark) {
     is_dark_ = is_now_dark;
     auto curr_tick = cv::getTickCount();
-    printf("Latency: %.3f sec, %d frames",
+    printf("Latency: %.3f sec, %d frames\n",
            (curr_tick - prev_tick_) / cv::getTickFrequency(),
            frame_number_ - prev_change_frame_);
     prev_tick_ = curr_tick;

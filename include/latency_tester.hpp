@@ -12,7 +12,7 @@ class LatencyTester {
   void feed(const cv::Mat& frame);
 
  private:
-  int threshold_ = 50;
+  int threshold_ = 150;
   int im_width_ = 1280;
   int im_height_ = 720;
   int frame_number_ = 0;
